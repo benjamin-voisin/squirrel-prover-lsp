@@ -1,6 +1,8 @@
 local lsp = require 'easy-lsp'
 
 local tactics = require 'squirrel-prover-lsp.tactics'
+local commands = require 'squirrel-prover-lsp.commands'
+local declarations = require 'squirrel-prover-lsp.declarations'
 
 lsp.name = "Squirrel-Prover LSP"
 lsp.version = "0.1.0"
@@ -29,6 +31,22 @@ function lsp.generate_completion (params)
 		local item = {
 			label = tactic.name,
 			documentation = tactic.description,
+			kind = 2
+		}
+		table.insert(results, item)
+	end
+	for _, command in pairs(commands) do
+		local item = {
+			label = command.name,
+			documentation = command.description,
+			kind = 2
+		}
+		table.insert(results, item)
+	end
+	for _, declaration in pairs(declarations) do
+		local item = {
+			label = declaration.name,
+			documentation = declaration.description,
 			kind = 2
 		}
 		table.insert(results, item)
